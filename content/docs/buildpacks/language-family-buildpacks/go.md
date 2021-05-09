@@ -26,6 +26,8 @@ for how to run the app.
 **NOTE: Though the example above uses the Paketo Base builder, this buildpack is
 also compatible with the Paketo Full builder and Paketo Tiny builder.**
 
+{{< table_of_contents >}}
+
 ## Supported Dependencies
 
 The Go Paketo Buildpack supports several versions of Go.
@@ -79,11 +81,30 @@ sets the following build flags:
 * `-buildmode=pie`
 * `-mod=vendor` (if there is a go.mod file in the app source code)
 
+### BP_GO_BUILD_FLAGS
 To set custom values for your build flags or override the defaults, assign a
-list of flags to the `BP_GO_BUILD_FLAGS` environment variable as shown below:
+list of flags to the `BP_GO_BUILD_FLAGS` environment variable at build time, either directly (ex. `pack build
+my-app --env BP_GO_BUILD_FLAGS="-buildmode=some-build-mode -tags=paketo,production"`) or through a
+[project.toml](https://github.com/buildpacks/spec/blob/main/extensions/project-descriptor.md)
+file:
 
 {{< code/copyable >}}
-BP_GO_BUILD_FLAGS=-buildmode=some-build-mode -tags=paketo,production -ldflags="-X main.variable=some-value" -race
+[[ build.env ]]
+  name = 'BP_GO_BUILD_FLAGS'
+  value = '-buildmode=some-build-mode -tags=paketo,production'
+{{< /code/copyable >}}
+
+### BP_GO_BUILD_LDFLAGS
+The Go CNB also allows users to configure the value of `-ldflags` for the `go build`
+command by setting the `BP_GO_BUILD_LDFLAGS` environment variable at build time, either directly (ex. `pack build
+my-app --env BP_GO_BUILD_LDFLAGS="-X main.variable=some-value"`) or through a
+[project.toml](https://github.com/buildpacks/spec/blob/main/extensions/project-descriptor.md)
+file:
+
+{{< code/copyable >}}
+[[ build.env ]]
+  name = 'BP_GO_BUILD_LDFLAGS'
+  value = '-X main.variable=some-value'
 {{< /code/copyable >}}
 
 ### Deprecated: Using buildpack.yml
@@ -241,3 +262,27 @@ cache layer in the app image.
 * Set by: `dep-ensure`
 * Phases: `build`
 * Value: Dep Cache layer path
+
+## Using CA Certificates
+Go Buildpack users can provide their own CA certificates and have them
+included in the container root truststore at build-time and runtime by
+following the instructions outlined in the [CA
+Certificates](https://paketo.io/docs/buildpacks/configuration/#ca-certificates)
+section of our configuration docs.
+
+## Setting Custom Start Processes
+Go Buildpack users can set custom start processes for their app image by
+following the instructions in the
+[Procfiles](https://paketo.io/docs/buildpacks/configuration/#procfiles) section
+of our configuration docs.
+
+## Setting Environment Variables in the App Image
+Go Buildpack users can embed launch-time environment variables in their
+app image by following the documentation for the [Environment Variables
+Buildpack](https://github.com/paketo-buildpacks/environment-variables/blob/main/README.md).
+
+## Adding Custom Labels to the App Image
+Go Buildpack users can add labels to their app image by following the
+instructions in the [Applying Custom
+Labels](https://paketo.io/docs/buildpacks/configuration/#applying-custom-labels)
+section of our configuration docs.

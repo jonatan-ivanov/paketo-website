@@ -40,6 +40,9 @@ a {
 	background: transparent;
 	color: inherit;
 }
+a:hover {
+	opacity: .7;
+}
 ins {
 	background-color: #ff9;
 	color: #000;
@@ -347,7 +350,7 @@ header {
 header .logo img {
 	max-width: 260px;
 }
-nav a {
+footer nav a, header nav a {
 	margin-left: 20px;
 	text-decoration: none;
 	color: #293878;
@@ -375,10 +378,6 @@ nav a, .cta, .docs-body a {
 	color: white;
 	padding: 8px 16px;
 	border-radius: 4px;
-}
-.external-link:hover {
-	background: #489ebc;
-	color: white;
 }
 .nav-opener {
 	position: fixed;
@@ -487,9 +486,6 @@ nav a, .cta, .docs-body a {
 	flex-flow: row wrap;
 	justify-content: space-evenly;
 	align-items: center;
-}
-.hero a.logo:hover {
-	opacity: 0.5;
 }
 .hero .logos .logo {
 	flex-basis: 33.33%;
@@ -692,9 +688,7 @@ footer p {
 .docs-body {
 	width: calc(100% - 380px);
 }
-.docs-body a:hover{
-	opacity: 0.5;
-}
+
 .docs-lastmod {
 	padding-left: 50px;
 	font-style: italic;
@@ -821,6 +815,12 @@ footer p {
 }
 .docs .code-output.visible .btn:before {
 	content: 'Hide ';
+}
+.toc {
+	font-size: 1em;
+	line-height: 1.1em;
+	color: inherit;
+	text-decoration: none;
 }
 
 /* footer */
